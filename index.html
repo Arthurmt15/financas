@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finanças Pessoais - Controle Financeiro</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#home">
+                <i class="bi bi-wallet2 me-2"></i>Finanças Pessoais
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#receitas">Receitas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#despesas">Despesas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#relatorios">Relatórios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#metas">Metas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#calculadora">Calculadora</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section bg-gradient text-white">
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Controle Total das Suas Finanças</h1>
+                    <p class="lead mb-4">Gerencie suas receitas, despesas e metas financeiras de forma simples e eficiente.</p>
+                    <a href="#dashboard" class="btn btn-light btn-lg me-3">
+                        <i class="bi bi-graph-up me-2"></i>Ver Dashboard
+                    </a>
+                    <a href="#receitas" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-plus-circle me-2"></i>Adicionar Transação
+                    </a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-image text-center">
+                        <i class="bi bi-pie-chart-fill display-1 text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">
+                <i class="bi bi-speedometer2 me-2"></i>Dashboard Financeiro
+            </h2>
+            
+            <!-- Cards de Resumo -->
+            <div class="row mb-5">
+                <div class="col-md-3 mb-4">
+                    <div class="card card-stats h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="card-category text-muted">Saldo Total</p>
+                                    <h3 class="card-title text-success" id="saldo-total">R$ 0,00</h3>
+                                </div>
+                                <div class="icon-big text-success">
+                                    <i class="bi bi-wallet2"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card card-stats h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="card-category text-muted">Receitas do Mês</p>
+                                    <h3 class="card-title text-primary" id="receitas-mes">R$ 0,00</h3>
+                                </div>
+                                <div class="icon-big text-primary">
+                                    <i class="bi bi-arrow-up-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card card-stats h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="card-category text-muted">Despesas do Mês</p>
+                                    <h3 class="card-title text-danger" id="despesas-mes">R$ 0,00</h3>
+                                </div>
+                                <div class="icon-big text-danger">
+                                    <i class="bi bi-arrow-down-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card card-stats h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="card-category text-muted">Economia do Mês</p>
+                                    <h3 class="card-title text-info" id="economia-mes">R$ 0,00</h3>
+                                </div>
+                                <div class="icon-big text-info">
+                                    <i class="bi bi-piggy-bank"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráficos -->
+            <div class="row">
+                <div class="col-lg-8 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Receitas vs Despesas (Últimos 6 meses)</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="chartReceitas" height="100"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Distribuição de Gastos</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="chartDespesas" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Receitas Section -->
+    <section id="receitas" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">
+                <i class="bi bi-plus-circle me-2"></i>Gerenciar Receitas
+            </h2>
+            
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-plus-lg me-2"></i>Adicionar Receita
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="form-receita">
+                                <div class="mb-3">
+                                    <label for="descricao-receita" class="form-label">Descrição</label>
+                                    <input type="text" class="form-control" id="descricao-receita" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="valor-receita" class="form-label">Valor (R$)</label>
+                                    <input type="number" class="form-control" id="valor-receita" step="0.01" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="categoria-receita" class="form-label">Categoria</label>
+                                    <select class="form-select" id="categoria-receita" required>
+                                        <option value="">Selecione...</option>
+                                        <option value="salario">Salário</option>
+                                        <option value="freelance">Freelance</option>
+                                        <option value="investimentos">Investimentos</option>
+                                        <option value="vendas">Vendas</option>
+                                        <option value="outros">Outros</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="data-receita" class="form-label">Data</label>
+                                    <input type="date" class="form-control" id="data-receita" required>
+                                </div>
+                                <button type="submit" class="btn btn-success w-100">
+                                    <i class="bi bi-check-lg me-2"></i>Adicionar Receita
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Histórico de Receitas</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Data</th>
+                                            <th>Descrição</th>
+                                            <th>Categoria</th>
+                                            <th>Valor</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabela-receitas">
+                                        <tr>
+                                            <td colspan="5" class="text-center text-muted">Nenhuma receita cadastrada</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Despesas Section -->
+    <section id="despesas" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">
+                <i class="bi bi-dash-circle me-2"></i>Gerenciar Despesas
+            </h2>
+            
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-danger text-white">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-dash-lg me-2"></i>Adicionar Despesa
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="form-despesa">
+                                <div class="mb-3">
+                                    <label for="descricao-despesa" class="form-label">Descrição</label>
+                                    <input type="text" class="form-control" id="descricao-despesa" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="valor-despesa" class="form-label">Valor (R$)</label>
+                                    <input type="number" class="form-control" id="valor-despesa" step="0.01" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="categoria-despesa" class="form-label">Categoria</label>
+                                    <select class="form-select" id="categoria-despesa" required>
+                                        <option value="">Selecione...</option>
+                                        <option value="alimentacao">Alimentação</option>
+                                        <option value="transporte">Transporte</option>
+                                        <option value="moradia">Moradia</option>
+                                        <option value="saude">Saúde</option>
+                                        <option value="educacao">Educação</option>
+                                        <option value="lazer">Lazer</option>
+                                        <option value="roupas">Roupas</option>
+                                        <option value="outros">Outros</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="data-despesa" class="form-label">Data</label>
+                                    <input type="date" class="form-control" id="data-despesa" required>
+                                </div>
+                                <button type="submit" class="btn btn-danger w-100">
+                                    <i class="bi bi-check-lg me-2"></i>Adicionar Despesa
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Histórico de Despesas</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Data</th>
+                                            <th>Descrição</th>
+                                            <th>Categoria</th>
+                                            <th>Valor</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabela-despesas">
+                                        <tr>
+                                            <td colspan="5" class="text-center text-muted">Nenhuma despesa cadastrada</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Relatórios Section -->
+    <section id="relatorios" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">
+                <i class="bi bi-bar-chart me-2"></i>Relatórios Financeiros
+            </h2>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Resumo Mensal</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <h4 class="text-success" id="total-receitas-relatorio">R$ 0,00</h4>
+                                    <small class="text-muted">Total Receitas</small>
+                                </div>
+                                <div class="col-4">
+                                    <h4 class="text-danger" id="total-despesas-relatorio">R$ 0,00</h4>
+                                    <small class="text-muted">Total Despesas</small>
+                                </div>
+                                <div class="col-4">
+                                    <h4 class="text-info" id="saldo-relatorio">R$ 0,00</h4>
+                                    <small class="text-muted">Saldo</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Filtros</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="mes-relatorio" class="form-label">Mês</label>
+                                    <select class="form-select" id="mes-relatorio">
+                                        <option value="1">Janeiro</option>
+                                        <option value="2">Fevereiro</option>
+                                        <option value="3">Março</option>
+                                        <option value="4">Abril</option>
+                                        <option value="5">Maio</option>
+                                        <option value="6">Junho</option>
+                                        <option value="7">Julho</option>
+                                        <option value="8">Agosto</option>
+                                        <option value="9">Setembro</option>
+                                        <option value="10">Outubro</option>
+                                        <option value="11">Novembro</option>
+                                        <option value="12">Dezembro</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label for="ano-relatorio" class="form-label">Ano</label>
+                                    <select class="form-select" id="ano-relatorio">
+                                        <option value="2024">2024</option>
+                                        <option value="2025">2025</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 mt-3" onclick="atualizarRelatorio()">
+                                <i class="bi bi-arrow-clockwise me-2"></i>Atualizar Relatório
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metas Section -->
+    <section id="metas" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">
+                <i class="bi bi-target me-2"></i>Metas Financeiras
+            </h2>
+            
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-plus-lg me-2"></i>Nova Meta
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="form-meta">
+                                <div class="mb-3">
+                                    <label for="nome-meta" class="form-label">Nome da Meta</label>
+                                    <input type="text" class="form-control" id="nome-meta" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="valor-meta" class="form-label">Valor Objetivo (R$)</label>
+                                    <input type="number" class="form-control" id="valor-meta" step="0.01" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="prazo-meta" class="form-label">Prazo</label>
+                                    <input type="date" class="form-control" id="prazo-meta" required>
+                                </div>
+                                <button type="submit" class="btn btn-info w-100">
+                                    <i class="bi bi-check-lg me-2"></i>Criar Meta
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Minhas Metas</h5>
+                        </div>
+                        <div class="card-body" id="lista-metas">
+                            <div class="text-center text-muted">
+                                <i class="bi bi-target display-4"></i>
+                                <p class="mt-3">Nenhuma meta cadastrada</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculadora Section -->
+    <section id="calculadora" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">
+                <i class="bi bi-calculator me-2"></i>Calculadora Financeira
+            </h2>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Calculadora de Juros Compostos</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="form-juros">
+                                <div class="mb-3">
+                                    <label for="capital-inicial" class="form-label">Capital Inicial (R$)</label>
+                                    <input type="number" class="form-control" id="capital-inicial" step="0.01">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="taxa-juros" class="form-label">Taxa de Juros (% ao mês)</label>
+                                    <input type="number" class="form-control" id="taxa-juros" step="0.01">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="periodo" class="form-label">Período (meses)</label>
+                                    <input type="number" class="form-control" id="periodo">
+                                </div>
+                                <button type="button" class="btn btn-primary w-100" onclick="calcularJuros()">
+                                    <i class="bi bi-calculator me-2"></i>Calcular
+                                </button>
+                            </form>
+                            <div id="resultado-juros" class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Simulador de Economia</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="form-economia">
+                                <div class="mb-3">
+                                    <label for="valor-mensal" class="form-label">Valor Mensal (R$)</label>
+                                    <input type="number" class="form-control" id="valor-mensal" step="0.01">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="meses-economia" class="form-label">Período (meses)</label>
+                                    <input type="number" class="form-control" id="meses-economia">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="rendimento" class="form-label">Rendimento (% ao mês)</label>
+                                    <input type="number" class="form-control" id="rendimento" step="0.01" value="0.5">
+                                </div>
+                                <button type="button" class="btn btn-success w-100" onclick="calcularEconomia()">
+                                    <i class="bi bi-piggy-bank me-2"></i>Simular
+                                </button>
+                            </form>
+                            <div id="resultado-economia" class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="bi bi-wallet2 me-2"></i>Finanças Pessoais</h5>
+                    <p class="text-muted">Controle total das suas finanças de forma simples e eficiente.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="text-muted mb-0">© 2025 - Desenvolvido para uso pessoal</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html>
+
