@@ -464,3 +464,60 @@ footer {
     box-shadow: var(--shadow-lg) !important;
 }
 
+
+
+/* Login Section */
+.login-section {
+    border-bottom: 1px solid #e9ecef;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+#user-info img {
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#user-name {
+    font-weight: 500;
+    color: var(--dark-color);
+}
+
+#signout-btn {
+    transition: all 0.3s ease;
+}
+
+#signout-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Google Sign-In Button Customization */
+.g_id_signin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ajuste para navegação fixa */
+.navbar.fixed-top + .login-section {
+    margin-top: 56px;
+}
+
+@media (max-width: 768px) {
+    .login-section {
+        padding: 0.5rem 0;
+    }
+    
+    #user-info .d-flex {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    #user-info .d-flex > * {
+        margin: 0 !important;
+    }
+}
+
