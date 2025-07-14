@@ -2,117 +2,9 @@
 let receitas = JSON.parse(localStorage.getItem('receitas')) || [];
 let despesas = JSON.parse(localStorage.getItem('despesas')) || [];
 let metas = JSON.parse(localStorage.getItem('metas')) || [];
-let currentUser = null;
-
-// Função para lidar com a resposta de credenciais do Google
-function handleCredentialResponse(response) {
-    // Decodificar o JWT token
-    const responsePayload = decodeJwtResponse(response.credential);
-    
-    currentUser = {
-        id: responsePayload.sub,
-        name: responsePayload.name,
-        email: responsePayload.email,
-        picture: responsePayload.picture
-    };
-    
-    // Salvar informações do usuário
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    
-    // Atualizar interface
-    updateUserInterface();
-    
-    // Carregar dados específicos do usuário
-    carregarDadosUsuario();
-    
-    mostrarAlerta(`Bem-vindo, ${currentUser.name}!`, 'success');
-}
-
-// Função para decodificar JWT
-function decodeJwtResponse(token) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-    return JSON.parse(jsonPayload);
-}
-
-// Função para atualizar a interface do usuário
-function updateUserInterface() {
-    const userInfo = document.getElementById('user-info');
-    const signinSection = document.getElementById('signin-section');
-    const userPhoto = document.getElementById('user-photo');
-    const userName = document.getElementById('user-name');
-    
-    if (currentUser) {
-        userPhoto.src = currentUser.picture;
-        userName.textContent = currentUser.name;
-        userInfo.classList.remove('d-none');
-        signinSection.classList.add('d-none');
-    } else {
-        userInfo.classList.add('d-none');
-        signinSection.classList.remove('d-none');
-    }
-}
-
-// Função para fazer logout
-function signOut() {
-    google.accounts.id.disableAutoSelect();
-    currentUser = null;
-    localStorage.removeItem('currentUser');
-    
-    // Limpar dados do usuário
-    receitas = [];
-    despesas = [];
-    metas = [];
-    localStorage.removeItem('receitas');
-    localStorage.removeItem('despesas');
-    localStorage.removeItem('metas');
-    
-    updateUserInterface();
-    carregarDados();
-    atualizarDashboard();
-    atualizarGraficos();
-    
-    mostrarAlerta('Logout realizado com sucesso!', 'info');
-}
-
-// Função para carregar dados específicos do usuário
-function carregarDadosUsuario() {
-    if (currentUser) {
-        const userKey = `user_${currentUser.id}`;
-        receitas = JSON.parse(localStorage.getItem(`${userKey}_receitas`)) || [];
-        despesas = JSON.parse(localStorage.getItem(`${userKey}_despesas`)) || [];
-        metas = JSON.parse(localStorage.getItem(`${userKey}_metas`)) || [];
-    }
-}
-
-// Função para salvar dados específicos do usuário
-function salvarDadosUsuario() {
-    if (currentUser) {
-        const userKey = `user_${currentUser.id}`;
-        localStorage.setItem(`${userKey}_receitas`, JSON.stringify(receitas));
-        localStorage.setItem(`${userKey}_despesas`, JSON.stringify(despesas));
-        localStorage.setItem(`${userKey}_metas`, JSON.stringify(metas));
-    } else {
-        // Fallback para dados gerais se não estiver logado
-        localStorage.setItem('receitas', JSON.stringify(receitas));
-        localStorage.setItem('despesas', JSON.stringify(despesas));
-        localStorage.setItem('metas', JSON.stringify(metas));
-    }
-}
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', function() {
-    // Verificar se há usuário logado
-    const savedUser = localStorage.getItem('currentUser');
-    if (savedUser) {
-        currentUser = JSON.parse(savedUser);
-        updateUserInterface();
-        carregarDadosUsuario();
-    }
-    
     // Configurar data atual nos campos de data
     const hoje = new Date().toISOString().split('T')[0];
     document.getElementById('data-receita').value = hoje;
@@ -157,12 +49,6 @@ function configurarEventListeners() {
     document.getElementById('form-meta').addEventListener('submit', function(e) {
         e.preventDefault();
         adicionarMeta();
-    });
-    
-    // Botão de logout
-    document.getElementById('signout-btn').addEventListener('click', function(e) {
-        e.preventDefault();
-        signOut();
     });
 }
 
@@ -673,7 +559,9 @@ function removerItem(tipo, id) {
 }
 
 function salvarDados() {
-    salvarDadosUsuario();
+    localStorage.setItem('receitas', JSON.stringify(receitas));
+    localStorage.setItem('despesas', JSON.stringify(despesas));
+    localStorage.setItem('metas', JSON.stringify(metas));
 }
 
 function carregarDados() {
